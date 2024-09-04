@@ -1,9 +1,15 @@
 import pygame
 from constants import *
+from player import *
 
 screen = None
 clock  = None
 dt     = None
+
+player = Player(
+    x = SCREEN_WIDTH / 2,
+    y = SCREEN_HEIGHT / 2
+)
 
 def main():
     print("Starting asteroids!")
@@ -36,6 +42,7 @@ def main():
 
         # Draw
         screen.fill(SCREEN_BACKGROUND_COLOR)
+        player.draw(screen)
         pygame.display.update()
 
         # post
