@@ -36,6 +36,7 @@ def main():
 
         # Draw
         screen.fill(SCREEN_BACKGROUND_COLOR)
+        pygame.display.update()
 
         # post
         dt = clock.tick(60)
