@@ -1,15 +1,11 @@
 import pygame
 from constants import *
+from circleshape import *
 from player import *
 
 screen = None
 clock  = None
 dt     = None
-
-player = Player(
-    x = SCREEN_WIDTH / 2,
-    y = SCREEN_HEIGHT / 2
-)
 
 def main():
     print("Starting asteroids!")
@@ -18,6 +14,18 @@ def main():
 
     pygame_init = pygame.init()
     print(f"pygame loaded {pygame_init[0]} out of {pygame_init[0] + pygame_init[1]} modules successfully.")
+
+    inputtable = pygame.sprite.Group()
+    updateable = pygame.sprite.Group()
+    drawable   = pygame.sprite.Group()
+
+    CircleShape.containers = (updateable, drawable)
+    Player.containers = (inputtable, updateable, drawable)
+
+    player = Player(
+        x = SCREEN_WIDTH / 2,
+        y = SCREEN_HEIGHT / 2
+    )
 
     clock = pygame.time.Clock()
     dt = 0
@@ -37,12 +45,18 @@ def main():
                 return
         
         # Input
+        k = pygame.key.get_pressed()
+        for sprite in inputtable:
+            sprite.input(dt, k)
 
         # Update
+        for sprite in updateable:
+            sprite.update(dt)
 
         # Draw
         screen.fill(SCREEN_BACKGROUND_COLOR)
-        player.draw(screen)
+        for sprite in drawable:
+            sprite.draw(screen)
         pygame.display.update()
 
         # post
