@@ -67,6 +67,10 @@ def main():
             if sprite.is_colliding(player):
                 print("Game over!")
                 exit()
+            for shot in shots:
+                if sprite.is_colliding(shot):
+                    shot.kill()
+                    sprite.split()
 
         # Draw
         screen.fill(SCREEN_BACKGROUND_COLOR)
